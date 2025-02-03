@@ -4,12 +4,18 @@ import logging
 
 logging.basicConfig(level=logging.INFO, format='[%(asctime)s]: %(message)s: ')
 
-package_name = "deepClassifier"
+package_name = "ImageCaption"
 
 list_of_files = [
    ".github/workflows/.gitkeep",
    f"src/{package_name}/__init__.py",
    f"src/{package_name}/components/__init__.py",
+   f"src/{package_name}/components/DataIngestion.py",
+   f"src/{package_name}/components/DataValidation.py",
+   f"src/{package_name}/components/DataPreprocessing.py",
+   f"src/{package_name}/components/ModelBuilder.py",
+   f"src/{package_name}/components/ModelTesting.py",
+   f"src/{package_name}/components/ModelPusher.py",
    f"src/{package_name}/utils/__init__.py",
    f"src/{package_name}/config/__init__.py",
    f"src/{package_name}/pipeline/__init__.py",
