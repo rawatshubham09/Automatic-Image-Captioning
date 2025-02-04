@@ -1,7 +1,6 @@
 tensorflow
 dvc
 pandas
-notebook
 numpy
 matplotlib
 seaborn
@@ -10,6 +9,15 @@ pyYAML
 tqdm
 ensure==1.0.2
 joblib
+Pillow
+gTTS
+IPython
 types-PyYAML
+ipykernel
+boto3
+mypy-boto3-s3
+botocore
+flask
+pymongo
 
 -e .
