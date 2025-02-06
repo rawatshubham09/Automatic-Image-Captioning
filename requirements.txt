@@ -4,8 +4,7 @@ pandas
 numpy
 matplotlib
 seaborn
-python-box==6.0.2
-pyYAML
+python-box
 tqdm
 ensure==1.0.2
 joblib
@@ -15,9 +14,12 @@ IPython
 types-PyYAML
 ipykernel
 boto3
+mlflow==2.2.2
 mypy-boto3-s3
 botocore
-flask
+Flask
+Flask-Cors
 pymongo
-
+scipy
+gdown
 -e .
