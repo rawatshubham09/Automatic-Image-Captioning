@@ -28,5 +28,4 @@ class ConfigurationManager:
             csv_file_path = config.csv_file_path
         )
 
-        print(data_ingestion_config.mongo_URI)
         return data_ingestion_config

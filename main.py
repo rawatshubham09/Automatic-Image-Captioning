@@ -1,5 +1,6 @@
 # Ensure the ImageCaptionP module is in the Python path
 from src.ImageCaptionP import logger
+#from dotenv import load_dotenv
 from src.ImageCaptionP.pipeline.stage_01_data_ingestion import DataIngestionPipeline
 
 STAGE_NAME = "Data Ingestion"

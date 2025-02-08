@@ -2,19 +2,22 @@ import os
 import base64
 import pandas as pd
 from pymongo import MongoClient
-from src.ImageCaptionP.constants import *
+from dotenv import load_dotenv
+from src.ImageCaptionP.constants import DB_NAME, COLLECTION_NAME
 from src.ImageCaptionP import logger
 from src.ImageCaptionP.utils.common import create_directory
-from src.ImageCaptionP.entity.config_entity import (DataIngestionConfig)
+from src.ImageCaptionP.entity.config_entity import DataIngestionConfig
 
 class DataIngestion:
     def __init__(self,config: DataIngestionConfig):
         self.config = config
+        load_dotenv()
 
     def download_images_and_captions_from_mongodb(self):
         try:
             # Connect to MongoDB
             client = MongoClient(self.config.mongo_URI)
+            
             db = client[DB_NAME]
             collection = db[COLLECTION_NAME]
             logger.info('Connecting to MongoDB...')
@@ -41,10 +44,12 @@ class DataIngestion:
                 for caption in captions:
                     csv_data.append({'image': image_name, 'caption': caption})
 
+            print("")
             # Save the CSV data to a file
             df = pd.DataFrame(csv_data)
             df.to_csv(self.config.csv_file_path, index=False)
 
             logger.info('mongo data Download complete!')
         except Exception as e:
+            logger.error(f"An error occurred: {e}")
             raise e
