@@ -1,6 +1,8 @@
-from ImageCaptionP.constants import *
-from ImageCaptionP.utils.common import read_yaml, create_directory
-from ImageCaptionP.entity.config_entity import DataIngestionConfig
+import os
+from dotenv import load_dotenv
+from src.ImageCaptionP.constants import *
+from src.ImageCaptionP.utils.common import read_yaml, create_directory
+from src.ImageCaptionP.entity.config_entity import DataIngestionConfig
 
 
 
@@ -11,8 +13,8 @@ class ConfigurationManager:
         params_filepath = PARAMS_FILE_PATH):
         self.config = read_yaml(config_filepath)
         self.params = read_yaml(params_filepath)
-
         create_directory([self.config.artifacts_root])
+        load_dotenv()
     
     def get_data_ingestion_config(self) -> DataIngestionConfig:
         config = self.config.data_ingestion
@@ -26,4 +28,5 @@ class ConfigurationManager:
             csv_file_path = config.csv_file_path
         )
 
+        print(data_ingestion_config.mongo_URI)
         return data_ingestion_config

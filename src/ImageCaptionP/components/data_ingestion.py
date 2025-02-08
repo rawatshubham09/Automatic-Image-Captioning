@@ -1,8 +1,11 @@
 import os
-from ImageCaptionP.constants import *
-from ImageCaptionP import logger
-from ImageCaptionP.utils.common import create_directory
-from ImageCaptionP.entity.config_entity import (DataIngestionConfig)
+import base64
+import pandas as pd
+from pymongo import MongoClient
+from src.ImageCaptionP.constants import *
+from src.ImageCaptionP import logger
+from src.ImageCaptionP.utils.common import create_directory
+from src.ImageCaptionP.entity.config_entity import (DataIngestionConfig)
 
 class DataIngestion:
     def __init__(self,config: DataIngestionConfig):

@@ -1,7 +1,7 @@
 
-from ImageCaptionP.config.configuration import ConfigurationManager
-from ImageCaptionP.components.data_ingestion import DataIngestion
-from ImageCaptionP import logger
+from src.ImageCaptionP.config.configuration import ConfigurationManager
+from src.ImageCaptionP.components.data_ingestion import DataIngestion
+from src.ImageCaptionP import logger
 
 STAGE_NAME = 'Data Ingestion stage'
 

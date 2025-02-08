@@ -1,5 +1,6 @@
-from ImageCaptionP import logger
-from ImageCaptionP.pipeline.stage_01_data_ingestion import DataIngestionPipeline
+# Ensure the ImageCaptionP module is in the Python path
+from src.ImageCaptionP import logger
+from src.ImageCaptionP.pipeline.stage_01_data_ingestion import DataIngestionPipeline
 
 STAGE_NAME = "Data Ingestion"
 try:

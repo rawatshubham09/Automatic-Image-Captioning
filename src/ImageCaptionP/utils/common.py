@@ -8,7 +8,7 @@ from box import ConfigBox
 from pathlib import Path
 from typing import Any
 import base64
-from ImageCaptionP import logger
+from src.ImageCaptionP import logger
 
 @ensure_annotations
 def read_yaml(path_to_yaml: Path) -> ConfigBox:
