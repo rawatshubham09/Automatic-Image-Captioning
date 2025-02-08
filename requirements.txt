@@ -1,0 +1,25 @@
+tensorflow
+pandas 
+dvc
+mlflow
+notebook
+numpy
+matplotlib
+seaborn
+python-box
+pyYAML
+tqdm
+ensure
+joblib
+types-PyYAML
+scipy
+Flask
+Flask-Cors
+gdown
+nltk
+pymongo
+ipykernel
+boto3
+mypy-boto3-s3
+regex
+-e .
