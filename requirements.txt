@@ -22,3 +22,5 @@ ipykernel
 boto3
 mypy-boto3-s3
 regex
+pydot
+graphviz

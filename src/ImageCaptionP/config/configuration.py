@@ -60,12 +60,17 @@ class ConfigurationManager:
 
         prepare_base_model_config = PrepareBaseModelConfig(
             root_dir = Path(config.root_dir),
-            base_model_path = Path(config.base_model_path),
-            updated_base_model_path = Path(config.updated_base_model_path),
-            params_image_size = self.param.IMAGE_SIZE,
-            params_learning_rate = self.param.LEARNING_RATE,
-            params_include_top = self.param.INCLUDE_TOP,
-            params_weights = self.param.WEIGHTS,
+            dense_model_path = Path(config.dense_model_path),                   #densenet201 h5 path
+            main_model_path = Path(config.main_model_path),                     #custom model path
+            image_feature_json_path = Path(config.image_feature_json_path),     #Image feature from densenet201
+            image_data_folder = Path(config.image_data_folder),                 #image data folder
+            captions_csv_file_path = Path(config.captions_csv_file_path),       #captions input csv file path
+            tokerizer_path = Path(config.tokerizer_path),                       #tokenizer path
+            params_image_size = self.params.IMAGE_SIZE,                          #[image_size]
+            params_weights = self.params.WEIGHTS,
+            params_yaml_file_path = Path(PARAMS_FILE_PATH),
+            model_image_path = Path(config.model_image_path)
+
         )
 
         return prepare_base_model_config

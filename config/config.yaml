@@ -16,5 +16,10 @@ data_validation:
 
 prepare_base_model:
   root_dir: artifacts/prepare_base_model
-  base_model_path: artifacts/prepare_base_model/base_model.h5 #densenet201
-  updated_base_model_path: artifacts/prepare_base_model/base_model_updated.h5 #end train model
+  dense_model_path: artifacts/prepare_base_model/dense_model.h5 #densenet201
+  main_model_path: artifacts/prepare_base_model/main_model.h5 #end train model
+  image_feature_json_path: artifacts/prepare_base_model/image_feature.json #contain image feature from densenet
+  captions_csv_file_path: artifacts/data_ingestion/captions.csv
+  image_data_folder: artifacts/data_ingestion/Images
+  tokerizer_path: artifacts/prepare_base_model/tokerizer.pkl
+  model_image_path: artifacts/prepare_base_model/model_image.png

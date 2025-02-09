@@ -25,6 +25,15 @@ def read_yaml(path_to_yaml: Path) -> ConfigBox:
         raise e
 
 @ensure_annotations
+def save_yaml(file_path: Path, data: dict):
+    try:
+        """Saves data to a YAML file."""
+        with open(file_path, 'w') as file:
+            yaml.safe_dump(data, file)
+    except Exception as e:
+        raise e
+
+@ensure_annotations
 def create_directory(path_to_directory: list, verbose=True):
     for path in path_to_directory:
         os.makedirs(path,exist_ok=True)
@@ -46,7 +55,7 @@ def load_json(path: Path) -> ConfigBox:
     return ConfigBox(content)
 
 @ensure_annotations
-def save_bin(data: Any, path: Path):
+def save_bin(data, path: Path):
     """save binary file
 
     Args:
@@ -101,10 +110,10 @@ def readImage(image_path:Path, img_size=224):
     return img
 
 @ensure_annotations
-def text_preprocessing(data: pd.DataFrame) -> pd.DataFrame:
+def text_preprocessing(data):
     data['caption'] = data['caption'].apply(lambda x: x.lower())
-    data['caption'] = data['caption'].apply(lambda x: x.replace("[^A-Za-z]",""))
-    data['caption'] = data['caption'].apply(lambda x: x.replace("\s+"," "))
-    data['caption'] = data['caption'].apply(lambda x: " ".join([word for word in x.split() if len(word)>1]))
-    data['caption'] = "startseq "+data['caption']+" endseq"
+    data['caption'] = data['caption'].apply(lambda x: re.sub(r'[^A-Za-z\s]', '', x))
+    data['caption'] = data['caption'].apply(lambda x: re.sub(r'\s+', ' ', x))
+    data['caption'] = data['caption'].apply(lambda x: " ".join([word for word in x.split() if len(word) > 1]))
+    data['caption'] = data['caption'].apply(lambda x: "startseq " + x + " endseq")
     return data

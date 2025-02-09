@@ -15,6 +15,7 @@ except Exception as e:
     raise e
 """
 
+"""
 from src.ImageCaptionP.pipeline.stage_02_data_validation import DataValidationPipeline
 STAGE_NAME = "Data Validation"
 try:
@@ -25,3 +26,14 @@ try:
 except Exception as e:
     logger.exception(e)
     raise e
+"""
+STAGE_NAME = "Model Building"
+from src.ImageCaptionP.pipeline.stage_03_model_builder import ModelBuilderPipeline
+try:
+    logger.info(f">>>>>>> stage {STAGE_NAME} started <<<<<<<")
+    obj = ModelBuilderPipeline()
+    obj.main()
+    logger.info(f">>>>>>> stage {STAGE_NAME} completed <<<<<<<\n\nx======================x")
+except Exception as e:
+    logger.exception(e)
+    raise e 
