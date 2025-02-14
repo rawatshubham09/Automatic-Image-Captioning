@@ -16,10 +16,58 @@ data_validation:
 
 prepare_base_model:
   root_dir: artifacts/prepare_base_model
-  dense_model_path: artifacts/prepare_base_model/dense_model.h5 #densenet201
-  main_model_path: artifacts/prepare_base_model/main_model.h5 #end train model
+  dense_model_path: artifacts/prepare_base_model/dense_model.keras #densenet201
+  main_model_path: artifacts/prepare_base_model/main_model.keras #end train model
   image_feature_json_path: artifacts/prepare_base_model/image_feature.json #contain image feature from densenet
   captions_csv_file_path: artifacts/data_ingestion/captions.csv
   image_data_folder: artifacts/data_ingestion/Images
   tokerizer_path: artifacts/prepare_base_model/tokerizer.pkl
   model_image_path: artifacts/prepare_base_model/model_image.png
+
+training:
+  root_dir: artifacts/training
+  un_trained_main_model_path: artifacts/prepare_base_model/main_model.keras
+  tokenizer_path: artifacts/prepare_base_model/tokerizer.pkl
+  densnet_model_path: artifacts/prepare_base_model/dense_model.keras
+  image_data_folder: artifacts/data_ingestion/Images
+  train_csv_file_path: artifacts/data_validation/train_data.csv
+  validation_csv_file_path: artifacts/data_validation/validation_data.csv
+  mlflow_uri: DAGSHUB_URL
+  model_checkpoint_file_path: artifacts/training/model_checkpoint.keras
+  trained_main_model_path: artifacts/training/main_model.keras
+
+best_model_compare:
+  root_dir: artifacts/best_models
+  best_model_path: downloads/model.keras
+  best_model_tokenizer_path: downloads/tokenizer.pkl
+  old_model_path: artifacts/training/main_model.keras
+  old_tokenizer_path: artifacts/prepare_base_model/tokerizer.pkl
+  image_data_folder: artifacts/data_ingestion/Images
+  validation_csv_file_path: artifacts/data_validation/validation_data.csv
+  bleu_score_yaml_file_path: config/BLEU_score.yaml
+  dense_model_path: artifacts/prepare_base_model/dense_model.keras
+  winner_model_path: artifacts/best_models/model.keras
+  winner_tokenizer_path: artifacts/best_models/tokenizer.pkl
+  winner_densenet_model_path: artifacts/best_models/densenet.keras
+
+s3_pusher:
+  download_dir: downloads
+  s3_bucket_name: S3_BUCKET_NAME
+  s3_region_name: AWS_REGION
+  aws_access_key_id: AWS_ACCESS_KEY_ID
+  aws_secret_access_key: AWS_SECRET_ACCESS_KEY
+  save_models_dir_path: artifacts/best_models
+  save_model_path: artifacts/best_models/model.keras            #best model 
+  save_tokenizer_path: artifacts/best_models/tokenizer.pkl      # best tokenizer
+  save_densenet_path: artifacts/best_models/densenet.keras      # best densenet
+  download_dir_path: downloads
+  model_path: downloads/model.keras
+  tokenizer_path: downloads/tokenizer.pkl
+  densenet_path: downloads/densenet.keras
+
+predictions:
+  root_dir: onlineImages/Images
+  predict_csv_path: onlineImages/Predictcaptions.csv
+  tokenizer_path: downloads/tokenizer.pkl
+  densenet_path: downloads/densenet.keras
+  model_path: downloads/model.keras

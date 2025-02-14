@@ -67,7 +67,7 @@ def save_bin(data, path: Path):
 
 
 @ensure_annotations
-def load_bin(path: Path) -> Any:
+def load_bin(path: Path):
     """load binary data
 
     Args:
@@ -109,7 +109,6 @@ def readImage(image_path:Path, img_size=224):
     img = img/255.
     return img
 
-@ensure_annotations
 def text_preprocessing(data):
     data['caption'] = data['caption'].apply(lambda x: x.lower())
     data['caption'] = data['caption'].apply(lambda x: re.sub(r'[^A-Za-z\s]', '', x))
@@ -117,3 +116,20 @@ def text_preprocessing(data):
     data['caption'] = data['caption'].apply(lambda x: " ".join([word for word in x.split() if len(word) > 1]))
     data['caption'] = data['caption'].apply(lambda x: "startseq " + x + " endseq")
     return data
+
+def idx_to_word(integer, tokenizer):
+ 
+    for word, index in tokenizer.word_index.items():  # Loop through all word-index pairs in the tokenizer
+        if index == integer:  # If the index matches the given integer
+            return word  # Return the corresponding word
+    return None  # If no match is found, return None
+
+def noIdea():
+    for index,record in samples.iterrows():
+
+        img = load_img(os.path.join(image_path,record['image']),target_size=(224,224))
+        img = img_to_array(img)
+        img = img/255.
+        
+        caption = predict_caption(caption_model, record['image'], tokenizer, max_length, features)
+        samples.loc[index,'caption'] = caption

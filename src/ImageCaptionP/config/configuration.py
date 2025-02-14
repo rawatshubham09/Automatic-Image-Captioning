@@ -5,7 +5,11 @@ from pathlib import Path
 from src.ImageCaptionP.utils.common import read_yaml, create_directory
 from src.ImageCaptionP.entity.config_entity import (DataIngestionConfig,
                                                     DataValidationConfig,
-                                                    PrepareBaseModelConfig)
+                                                    PrepareBaseModelConfig,
+                                                    TrainningConfig,
+                                                    BestModelConfig,
+                                                    S3DealerConfig,
+                                                    ImagePredictionsConfig)
 
 
 
@@ -74,3 +78,102 @@ class ConfigurationManager:
         )
 
         return prepare_base_model_config
+    
+    def get_training_config(self) -> TrainningConfig:
+        config = self.config.training
+
+        create_directory([config.root_dir])
+
+        training_config = TrainningConfig(
+            root_dir = Path(config.root_dir),
+            trained_main_model_path = Path(config.trained_main_model_path),
+            un_trained_main_model_path = Path(config.un_trained_main_model_path),
+            tokenizer_path = Path(config.tokenizer_path),
+            densnet_model_path = Path(config.densnet_model_path),
+            image_data_folder = Path(config.image_data_folder),
+            train_csv_file_path = Path(config.train_csv_file_path),
+            validation_csv_file_path = Path(config.validation_csv_file_path),
+            model_checkpoint_file_path = Path(config.model_checkpoint_file_path),
+            params_epochs = self.params.EPOCHS,
+            params_batch_size = self.params.BATCH_SIZE,
+            params_image_size = self.params.IMAGE_SIZE,
+            vocab_size = self.params.VOCAB_SIZE,
+            max_sent_length = self.params.MAX_SENT_LENGTH,
+            mlflow_uri = os.environ.get(config.mlflow_uri),
+            x_col = self.params.X_COL,
+            y_col = self.params.Y_COL
+        )
+
+        return training_config
+    
+    def get_best_model_config(self) -> BestModelConfig:
+        config = self.config.best_model_compare
+        
+        create_directory([config.root_dir])
+        
+        best_model_config = BestModelConfig(
+            root_dir = Path(config.root_dir),
+            best_model_path = Path(config.best_model_path),
+            best_model_tokenizer_path = Path(config.best_model_tokenizer_path),
+            old_model_path = Path(config.old_model_path),
+            old_tokenizer_path = Path(config.old_tokenizer_path),
+            image_data_folder = Path(config.image_data_folder),
+            validation_csv_file_path = Path(config.validation_csv_file_path),
+            bleu_score_yaml_file_path = Path(config.bleu_score_yaml_file_path),
+            dense_model_path = Path(config.dense_model_path),
+            winner_model_path =Path(config.winner_model_path),
+            winner_tokenizer_path = Path(config.winner_tokenizer_path),
+            winner_densenet_model_path = Path(config.winner_densenet_model_path),
+            params_image_size = self.params.IMAGE_SIZE,
+            max_sentence_length = self.params.MAX_SENT_LENGTH,
+            best_max_sentence_length = self.params.BEST_MAX_SENT_LENGTH,
+            x_col = self.params.X_COL,
+            y_col = self.params.Y_COL
+        )
+
+        return best_model_config
+    
+    def get_s3_config(self):
+
+        config = self.config.s3_pusher
+
+        create_directory([config.root_dir])
+
+        prepare_s3_config = S3DealerConfig(
+
+            root_dir = Path(config.root_dir),
+            s3_bucket_name = os.environ.get(config.s3_bucket_name),
+            s3_region_name = os.environ.get(config.s3_region_name),
+            aws_access_key_id = os.environ.get(config.aws_access_key_id),
+            aws_secret_access_key = os.environ.get(config.aws_secret_access_key),
+            save_models_dir_path = Path(config.save_models_dir),
+            download_dir_path = Path(config.download_dir_path),
+            model_path = Path(config.model_path),
+            tokenizer_path = Path(config.tokenizer_path),
+            densenet_path = Path(config.densenet_path),
+            save_model_path = Path(config.save_model_path),
+            save_tokenizer_path = Path(congig.save_tokenizer_path),
+            save_densenet_path = Path(congig.save_densenet_path)
+        )
+    
+        return prepare_s3_config
+    
+    def get_prediction_config(self):
+        config = self.config.predictions
+        
+        create_directory([config.root_dir])
+        
+        prediction_config = ImagePredictionsConfig(
+            root_dir = Path(config.root_dir),
+            image_folder_path = Path(config.root_dir),
+            predict_csv_path = Path(config.predict_csv_path),
+            tokenizer_path = Path(config.tokenizer_path),
+            densenet_path = Path(config.densenet_path),
+            model_path = Path(config.model_path),
+            max_sent_len = self.params.BEST_MAX_SENT_LENGTH,
+            image_size = self.params.IMAGE_SIZE,
+            x_col = self.params.X_COL,
+            y_col = self.params.Y_COL,
+        )
+        
+        return prediction_config
