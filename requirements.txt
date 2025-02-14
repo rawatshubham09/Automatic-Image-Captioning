@@ -24,3 +24,4 @@ mypy-boto3-s3
 regex
 pydot
 graphviz
+dagshub

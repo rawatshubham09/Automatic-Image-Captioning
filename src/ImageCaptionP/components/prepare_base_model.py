@@ -37,7 +37,8 @@ class ModelBuilder:
             model = Model(inputs=model.input, outputs=model.layers[-2].output)
 
             # save densenet201 model
-            save_bin(model, self.config.dense_model_path)
+            model.save(self.config.dense_model_path)
+            #save_bin(model, self.config.dense_model_path)
             logger.info("Densenet201 model loaded successfully.")
 
         except Exception as e:
@@ -83,14 +84,12 @@ class ModelBuilder:
     def build_main_model(self):
         try:
             # Define two input layers
-            logger.info("Building main model...")
-
             input1 = Input(shape=(1920,))  # Input for image features
             input2 = Input(shape=(self.max_length,))  # Input for the caption sequence
 
             # Image feature processing
             img_features = Dense(256, activation='relu')(input1)  # Fully connected layer to reduce dimensionality
-            img_features_reshaped = Reshape((1, 256), input_shape=(256,))(img_features)  # Reshape to (1, 256) to concatenate with LSTM output
+            img_features_reshaped = Reshape((1, 256),input_shape=(256,))(img_features)  # Reshape to (1, 256) to concatenate with LSTM output
 
             # Caption (text) processing
             sentence_features = Embedding(self.vocab_size, 256, mask_zero=False)(input2)  # Embedding layer for input captions
@@ -106,11 +105,11 @@ class ModelBuilder:
 
             # Create and compile the model
             caption_model = Model(inputs=[input1, input2], outputs=output)  # Define the model with two inputs and one output
-            #caption_model.compile(loss='categorical_crossentropy', optimizer='adam')  # Compile the model with categorical crossentropy loss
-            
-            # save the model to disk
-            save_bin(caption_model, self.config.main_model_path)
-            
+            caption_model.compile(loss='categorical_crossentropy', optimizer='adam')  # Compile the model with categorical crossentropy loss
+
+            # Save the model to disk
+            caption_model.save(self.config.main_model_path)
+
             print(caption_model.summary())
             logger.info("Main model created successfully.")
         except Exception as e:
