@@ -9,7 +9,8 @@ from src.ImageCaptionP.entity.config_entity import (DataIngestionConfig,
                                                     TrainningConfig,
                                                     BestModelConfig,
                                                     S3DealerConfig,
-                                                    ImagePredictionsConfig)
+                                                    ImagePredictionsConfig,
+                                                    FrountEndConfig)
 
 
 
@@ -177,3 +178,17 @@ class ConfigurationManager:
         )
         
         return prediction_config
+    
+    def get_frountend_config(self):
+        config = self.config.frountend
+
+        create_directory([config.artifact_dir])
+
+        frontend_config = FrountEndConfig(
+            artifact_dir = Path(config.artifact_dir),
+            image_folder = Path(config.image_folder),
+            log_file_path = Path(config.log_file_path)
+        )
+
+        return frontend_config
+        

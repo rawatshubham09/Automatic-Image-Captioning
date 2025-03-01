@@ -44,3 +44,9 @@ button:hover {
     font-size: 18px;
     color: #333;
 }
+
+.log-container {
+    max-height: 300px;  /* Set the desired maximum height for the container */
+    overflow-y: scroll; /* Enable vertical scrolling */
+    background-color: #f8f9fa;
+}

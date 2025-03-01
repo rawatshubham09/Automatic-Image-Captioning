@@ -25,3 +25,5 @@ regex
 pydot
 graphviz
 dagshub
+Flask-SQLAlchemy
+bcrypt

@@ -71,3 +71,9 @@ predictions:
   tokenizer_path: downloads/tokenizer.pkl
   densenet_path: downloads/densenet.keras
   model_path: downloads/model.keras
+
+frountend:
+  artifact_dir : "artifacts"
+  image_folder : "static/images"
+  log_file_path : "logs/running_logs.log"
+  

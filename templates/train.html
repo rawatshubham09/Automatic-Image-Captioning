@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Dashbord Page {% endblock title%}
+{% block navbar %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for("index") }}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " href="{{ url_for("dashboard") }}">Dashbord</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ url_for("train") }}">Model Train</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " href="{{ url_for("display_logs") }}">Logs</a>
+        </li>
+        
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>
+            </li>
+        </ul>
+{% endblock navbar %}
+
+{% block content %}
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+        <div class="row w-100">
+            <div class="col-md-6 text-center">
+                <h2>Default Train</h2>
+                <p>Use the default training configuration.</p>
+                <form method="POST" action="/train_default">
+                    <button type="submit" class="btn btn-primary">Train Default</button>
+                </form>
+            </div>
+            <div class="col-md-6 text-center">
+                <h2>Custom Train</h2>
+                <p>Customize your training parameters.</p>
+                <a href="/custom_train" class="btn btn-secondary">Custom Train</a>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

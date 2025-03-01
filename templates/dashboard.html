@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Dashbord Page {% endblock title%}
+{% block navbar %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for("index") }}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ url_for("dashboard") }}">Dashbord</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for("to_predict") }}">Prediction</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for("train") }}">Model Train</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " href="{{ url_for("display_logs") }}">Logs</a>
+        </li>
+        
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>
+            </li>
+        </ul>
+{% endblock navbar %}
+
+{% block content %}
+        <h1>Hi, {{ name }}</h1>
+        <div class="container mt-5">
+            <h2>Available Artifact Folders</h2>
+            <div class="d-flex flex-wrap">
+                {% for folder in folders %}
+                    <div class="m-2">
+                        <a href="/{{ folder }}" class="d-flex flex-column align-items-center p-3 rounded border shadow-sm" style="width: 140px; height: 145px; text-decoration: none; color: inherit;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="blue" class="bi bi-folder-fill mb-2" viewBox="0 0 16 16">
+                                <path d="M9.828 3h3.982a2 2 0 0 1 1.992 2.181l-.637 7A2 2 0 0 1 13.174 14H2.825a2 2 0 0 1-1.991-1.819l-.637-7a2 2 0 0 1 .342-1.31L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3m-8.322.12q.322-.119.684-.12h5.396l-.707-.707A1 1 0 0 0 6.172 2H2.5a1 1 0 0 0-1 .981z"/>
+                            </svg>
+                            <span class="text-center" style="word-break: break-word; overflow: hidden; text-overflow: ellipsis;">{{ folder.replace('_', ' ') | title }}</span>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+{% endblock content %}

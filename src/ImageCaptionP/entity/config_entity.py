@@ -102,3 +102,9 @@ class ImagePredictionsConfig:
     image_size: int
     x_col: str
     y_col: str
+
+@dataclass(frozen=True)
+class FrountEndConfig:
+    artifact_dir : Path
+    image_folder : Path
+    log_file_path : Path

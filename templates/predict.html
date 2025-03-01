@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Image Caption Prediction{% endblock title %}
+
+{% block navbar %}
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for("index") }}">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url_for("dashboard") }}">Dashbord</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link active" href="{{ url_for("to_predict") }}">Prediction</a>
+    </li>
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>
+        </li>
+    </ul>
+{% endblock navbar %}
+
+{% block content %}
+    <style>
+        #imagePreview img {
+            max-width: 100%;
+        }
+    </style>
+    <h1 class="text-center">Image Caption Prediction</h1>
+    <h4>Hi, {{ name }} Upload Image here ..</h4>
+    <form id="uploadForm" enctype="multipart/form-data" class="text-center">
+        <div class="mb-3">
+            <input type="file" id="imageInput" name="image" accept="image/*" class="form-control" onchange="previewImage(event)">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="uploadImage()">Upload Image</button>
+    </form>
+    <div id="imagePreview" class="mt-4 text-center">
+        <div class="d-flex justify-content-center align-items-center" style="height: 400px;">
+            <img src="{{ url_for('static', filename='readme/demo.jpg') }}" alt="Dummy Image" style="max-height: 100%; max-width: 80%;">
+        </div>
+    </div>
+    <div id="predictionResult" class="mt-4 text-center"></div>
+
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.createElement('img');
+                output.src = reader.result;
+                output.style.maxWidth = '100%';
+                document.getElementById('imagePreview').innerHTML = '<div class="d-flex justify-content-center align-items-center" style="height: 400px;"></div>';
+                document.getElementById('imagePreview').querySelector('div').appendChild(output);
+            };
+            if (event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            } else {
+                document.getElementById('imagePreview').innerHTML = `<div class="d-flex justify-content-center align-items-center" style="height: 400px;"><img src="{{ url_for('static', filename='readme/demo.jpg') }}" alt="Dummy Image" style="max-height: 100%; max-width: 80%;"></div>`;
+                document.getElementById('predictionResult').innerHTML = '';
+            }
+        }
+
+        function uploadImage() {
+            const predictionResult = document.getElementById('predictionResult');
+            const uploadButton = document.querySelector('#uploadForm button');
+            const imageInput = document.getElementById('imageInput');
+            const imageFile = imageInput.files[0];
+
+            if (!imageFile) {
+                alert("Please select an image first.");
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.createElement('img');
+                output.src = reader.result;
+                output.style.maxWidth = '100%';
+                document.getElementById('imagePreview').innerHTML = '<div class="d-flex justify-content-center align-items-center" style="height: 400px;"></div>';
+                document.getElementById('imagePreview').querySelector('div').appendChild(output);
+            };
+            reader.readAsDataURL(imageFile);
+
+            uploadButton.disabled = true;
+
+            predictionResult.innerHTML = `
+                <div class="spinner-grow text-muted"></div>
+                <div class="spinner-grow text-primary"></div>
+                <div class="spinner-grow text-success"></div>
+                <div class="spinner-grow text-info"></div>
+                <div class="spinner-grow text-warning"></div>
+                <div class="spinner-grow text-danger"></div>
+                <div class="spinner-grow text-secondary"></div>
+                <div class="spinner-grow text-dark"></div>
+                <div class="spinner-grow text-light"></div>
+            `;
+
+            const formData = new FormData(document.getElementById('uploadForm'));
+            fetch('/predict', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                predictionResult.innerHTML = `Prediction: ${data.prediction}`;
+                uploadButton.disabled = false;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                predictionResult.innerHTML = 'Error during prediction.';
+                uploadButton.disabled = false;
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!document.getElementById('imageInput').files[0]) {
+                document.getElementById('imagePreview').innerHTML = `<div class="d-flex justify-content-center align-items-center" style="height: 400px;"><img src="{{ url_for('static', filename='readme/demo.jpg') }}" alt="Dummy Image" style="max-height: 100%; max-width: 80%;"></div>`;
+            }
+        });
+    </script>
+{% endblock content %}
