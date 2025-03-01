@@ -225,6 +225,43 @@ def train():
 def download(filename):
     return send_from_directory("artifacts", filename, as_attachment=True)
 
+@app.route('/dashboard/default-train',methods=['POST'])
+@cross_origin()
+def defaultTrain():
+    if "name" in session:
+        if request.method == "POST":
+            #os.system("python main.py")
+            # os.system("dvc repro")
+            print("train successfully")
+            return redirect(url_for("display_logs"))
+        return render_template('train.html', )
+    return redirect(url_for("login"))
+
+@app.route('/dashboard/custom-train', methods=['GET', 'POST'])
+@cross_origin()
+def customeTrain():
+    if "name" in session:
+        if request.method == 'POST':
+            mongo_link = request.form.get('mongoLink')
+            epochs = request.form.get('epochs')
+            batch_size = request.form.get('batchSize')
+            test_train_split = request.form.get('testTrainSplit')
+
+            # Process the form data (e.g., run your training script)
+            print("Custom Train Parameters:")
+            print(f"MongoDB Link: {mongo_link}")
+            print(f"Epochs: {epochs}")
+            print(f"Batch Size: {batch_size}")
+            print(f"Test-Train Split: {test_train_split}")
+
+            # Add your training logic here using the received parameters.
+            # Example: os.system(f"python train.py --mongo {mongo_link} --epochs {epochs} ...")
+
+            return "Training started with custom parameters." # Or render a result page.
+
+        return render_template("custome_train.html")
+    return redirect(url_for("login"))
+
 if __name__ == '__main__':
 
     # Object of Prediction pipeline

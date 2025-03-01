@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Custome Train Page {% endblock title%}
+{% block navbar %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for("index") }}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " href="{{ url_for("dashboard") }}">Dashbord</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link active" href="{{ url_for("train") }}">Model Train</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " href="{{ url_for("display_logs") }}">Logs</a>
+        </li>
+        
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>
+            </li>
+        </ul>
+{% endblock navbar %}
+
+{% block content %}
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+        <div class="row w-100">
+            <form method="POST" action="/dashboard/custom-train">
+                <div class="col-12 text-center mb-4">
+                    <label for="mongoLink" class="form-label">MongoDB Link:</label>
+                    <input type="text" class="form-control" id="mongoLink" name="mongoLink" placeholder="Enter MongoDB connection string">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="epochs" class="form-label">Epochs:</label>
+                    <input type="number" class="form-control" id="epochs" name="epochs" placeholder="Enter number of epochs">
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="batchSize" class="form-label">Batch Size:</label>
+                    <input type="number" class="form-control" id="batchSize" name="batchSize" placeholder="Enter batch size">
+                </div>
+
+                <div class="col-12 mb-4">
+                    <label for="testTrainSplit" class="form-label">Test-Train Split:</label>
+                    <input type="range" class="form-range" id="testTrainSplit" name="testTrainSplit" min="1" max="99" value="80">
+                    <p>Split: <span id="splitValue">80</span>% Train, <span id="testValue">20</span>% Test</p>
+                </div>
+
+                <div class="col-12 text-center">
+                    <button type="submit" class="btn btn-primary me-2">Train</button>
+                    <a href="{{ url_for("train") }}" class="btn btn-secondary">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const slider = document.getElementById("testTrainSplit");
+        const splitValue = document.getElementById("splitValue");
+        const testValue = document.getElementById("testValue");
+
+        slider.oninput = function() {
+            splitValue.textContent = this.value;
+            testValue.textContent = 100 - this.value;
+        }
+    </script>
+{% endblock content %}

@@ -25,17 +25,17 @@
 {% block content %}
     <div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
         <div class="row w-100">
-            <div class="col-md-6 text-center">
+            <div class="col-md-6 text-center border-end">
                 <h2>Default Train</h2>
                 <p>Use the default training configuration.</p>
-                <form method="POST" action="/train_default">
+                <form method="POST" action="{{ url_for("defaultTrain") }}">
                     <button type="submit" class="btn btn-primary">Train Default</button>
                 </form>
             </div>
             <div class="col-md-6 text-center">
                 <h2>Custom Train</h2>
                 <p>Customize your training parameters.</p>
-                <a href="/custom_train" class="btn btn-secondary">Custom Train</a>
+                <a href="{{ url_for("customeTrain") }}" class="btn btn-secondary">Custom Train</a>
             </div>
         </div>
     </div>
