@@ -4,6 +4,7 @@ import warnings
 #from dotenv import load_dotenv
 
 warnings.filterwarnings('ignore')
+
 """
 from src.ImageCaptionP.pipeline.stage_01_data_ingestion import DataIngestionPipeline
 
@@ -16,9 +17,9 @@ try:
 except Exception as e:
     logger.exception(e)
     raise e
-"""
 
-"""
+
+
 from src.ImageCaptionP.pipeline.stage_02_data_validation import DataValidationPipeline
 STAGE_NAME = "Data Validation"
 try:
@@ -29,8 +30,8 @@ try:
 except Exception as e:
     logger.exception(e)
     raise e
-"""
-"""
+
+
 STAGE_NAME = "Model Building"
 from src.ImageCaptionP.pipeline.stage_03_model_builder import ModelBuilderPipeline
 try:
@@ -52,9 +53,9 @@ try:
 except Exception as e:
     logger.exception(e)
     raise e 
-"""
 
-"""
+
+
 STAGE_NAME = "Select Best Model"
 from src.ImageCaptionP.pipeline.stage_05_best_model import BestModelSelectingPipeline
 try:
@@ -65,8 +66,8 @@ try:
 except Exception as e:
     logger.exception(e)
     raise e 
-"""
 
+"""
 STAGE_NAME = "Select Best Model"
 from src.ImageCaptionP.pipeline.stage_06_s3_function import S3FunctionPipeline
 if __name__ == '__main__':

@@ -223,7 +223,9 @@ def train():
 @app.route('/download/<filename>')
 @cross_origin()
 def download(filename):
-    return send_from_directory("artifacts", filename, as_attachment=True)
+    if "name" in session:
+        return send_from_directory("artifacts", filename, as_attachment=True)
+    return redirect(url_for("login"))
 
 @app.route('/dashboard/default-train',methods=['POST'])
 @cross_origin()
