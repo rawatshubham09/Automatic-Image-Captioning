@@ -2,6 +2,7 @@ import io
 import os
 import bcrypt
 import numpy as np
+from pathlib import Path
 from PIL import Image
 from dotenv import load_dotenv
 from flask_cors import CORS, cross_origin
@@ -13,6 +14,7 @@ from tensorflow.keras.preprocessing.image import img_to_array
 from src.ImageCaptionP import logger
 from src.ImageCaptionP.config.configuration import ConfigurationManager
 from src.ImageCaptionP.pipeline.prediction import ImageCaptionPredict
+from src.ImageCaptionP.utils.common import save_yaml, read_yaml
 
 load_dotenv()
 
@@ -233,7 +235,6 @@ def defaultTrain():
     if "name" in session:
         if request.method == "POST":
             #os.system("python main.py")
-            # os.system("dvc repro")
             print("train successfully")
             return redirect(url_for("display_logs"))
         return render_template('train.html', )
@@ -245,8 +246,8 @@ def customeTrain():
     if "name" in session:
         if request.method == 'POST':
             mongo_link = request.form.get('mongoLink')
-            epochs = request.form.get('epochs')
-            batch_size = request.form.get('batchSize')
+            epochs = int(request.form.get('epochs'))
+            batch_size = int(request.form.get('batchSize'))
             test_train_split = request.form.get('testTrainSplit')
 
             # Process the form data (e.g., run your training script)
@@ -256,10 +257,31 @@ def customeTrain():
             print(f"Batch Size: {batch_size}")
             print(f"Test-Train Split: {test_train_split}")
 
-            # Add your training logic here using the received parameters.
-            # Example: os.system(f"python train.py --mongo {mongo_link} --epochs {epochs} ...")
+            if len(mongo_link)>0:
+                data = {"mongo_link" : mongo_link,
+                        "needTrained" : "yes"
+                        }
+                filePath = Path("src/ImageCaptionP/components/newFile.yaml")
+                save_yaml(filePath,data)
 
-            return "Training started with custom parameters." # Or render a result page.
+            if (epochs>0) and (batch_size>0):
+                # Load existing data
+                confi_box = read_yaml(Path("params.yaml"))
+                
+                # Convert ConfigBox to dictionary
+                existing_data = confi_box.to_dict()
+                
+                # New data to be added
+                existing_data["EPOCHS"] = epochs
+                existing_data["BATCH_SIZE"] = batch_size
+                
+                # Save updated data back to the YAML file
+                save_yaml(Path("params.yaml"), existing_data)
+
+            #os.system("python main.py")
+            print("train successfully")
+
+            return redirect(url_for("display_logs"))
 
         return render_template("custome_train.html")
     return redirect(url_for("login"))

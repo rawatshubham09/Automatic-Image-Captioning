@@ -2,7 +2,7 @@ import os
 import boto3
 
 from src.ImageCaptionP import logger
-from src.ImageCaptionP.components import S3Manager
+from src.ImageCaptionP.components.s3_handler import S3Manager
 from src.ImageCaptionP.entity.config_entity import S3DealerConfig
 
 class s3Client:

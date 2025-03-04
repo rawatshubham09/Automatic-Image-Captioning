@@ -1,12 +1,16 @@
 import os
 import base64
 import pandas as pd
+from pathlib import Path
 from pymongo import MongoClient
 from dotenv import load_dotenv
 from src.ImageCaptionP.constants import DB_NAME, COLLECTION_NAME
 from src.ImageCaptionP import logger
 from src.ImageCaptionP.utils.common import create_directory
 from src.ImageCaptionP.entity.config_entity import DataIngestionConfig
+from src.ImageCaptionP.utils.common import save_yaml, read_yaml
+
+filePath = Path("src/ImageCaptionP/components/newFile.yaml")
 
 class DataIngestion:
     def __init__(self,config: DataIngestionConfig):
@@ -16,7 +20,26 @@ class DataIngestion:
     def download_images_and_captions_from_mongodb(self):
         try:
             # Connect to MongoDB
-            client = MongoClient(self.config.mongo_URI)
+            confi_box = read_yaml(filePath)
+            
+            # Convert ConfigBox to dictionary
+            existing_data = confi_box.to_dict()
+            
+            ## if custome file is trainning:
+            try:
+                # New data to be added
+            if existing_data["needTrained"] == "yes":
+                client = MongoClient(existing_data["mongo_link"])
+            else:
+                client = MongoClient(self.config.mongo_URI)
+
+            existing_data["needTrained"] = "no"
+            # Save updated data back to the YAML file
+            save_yaml(Path("params.yaml"), existing_data)
+            except:
+                client = MongoClient(self.config.mongo_URI)
+            
+            # Connecting to DB
             
             db = client[DB_NAME]
             collection = db[COLLECTION_NAME]
