@@ -291,4 +291,4 @@ if __name__ == '__main__':
     # Object of Prediction pipeline
     pipeline = ImageCaptionPredict(image_prediction_config)
     logger.info('=============== Prediction app.py started =====================')
-    app.run(debug=True,host='0.0.0.0', port=8080)
+    app.run(host='0.0.0.0', port=8080)
