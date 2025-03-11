@@ -1,7 +1,6 @@
 tensorflow
 pandas 
 mlflow
-notebook
 numpy
 matplotlib
 seaborn
@@ -17,7 +16,6 @@ Flask-Cors
 gdown
 nltk
 pymongo
-ipykernel
 boto3
 mypy-boto3-s3
 regex
@@ -26,3 +24,4 @@ graphviz
 dagshub
 Flask-SQLAlchemy
 bcrypt
+-e .
