@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import tensorflow as tf
 import mlflow
+import dagshub
 from tqdm import tqdm
 from tensorflow.keras.models import Sequential, Model, load_model
 from tensorflow.keras.utils import Sequence, to_categorical
@@ -124,7 +125,7 @@ class Training:
         logger.info("Inside TrainModel function")
         self.main_model.compile(loss='categorical_crossentropy', optimizer='adam')
 
-        #mlflow.set_tracking_uri(self.config.mlflow_uri)
+        mlflow.set_tracking_uri(self.config.mlflow_uri)
 
         with mlflow.start_run() as run:
             self.main_model.fit(

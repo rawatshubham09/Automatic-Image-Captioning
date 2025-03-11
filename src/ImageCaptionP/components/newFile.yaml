@@ -1,2 +1,2 @@
-mongo_link: https://mongodb/string2
-needTrained: true
+mongo_link: https://mongodb/string3
+needTrained: 'yes'

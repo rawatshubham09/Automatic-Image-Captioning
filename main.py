@@ -5,7 +5,7 @@ import warnings
 
 warnings.filterwarnings('ignore')
 
-
+"""
 from src.ImageCaptionP.pipeline.stage_01_data_ingestion import DataIngestionPipeline
 
 STAGE_NAME = "Data Ingestion"
@@ -68,6 +68,7 @@ except Exception as e:
     raise e 
 
 
+"""
 STAGE_NAME = "Select Best Model"
 from src.ImageCaptionP.pipeline.stage_06_s3_function import S3FunctionPipeline
 if __name__ == '__main__':

@@ -138,23 +138,23 @@ class ConfigurationManager:
 
         config = self.config.s3_pusher
 
-        create_directory([config.root_dir])
+        create_directory([config.download_dir])
 
         prepare_s3_config = S3DealerConfig(
 
-            root_dir = Path(config.root_dir),
+            root_dir = Path(config.download_dir),
             s3_bucket_name = os.environ.get(config.s3_bucket_name),
             s3_region_name = os.environ.get(config.s3_region_name),
             aws_access_key_id = os.environ.get(config.aws_access_key_id),
             aws_secret_access_key = os.environ.get(config.aws_secret_access_key),
-            save_models_dir_path = Path(config.save_models_dir),
+            save_models_dir_path = Path(config.save_models_dir_path),
             download_dir_path = Path(config.download_dir_path),
             model_path = Path(config.model_path),
             tokenizer_path = Path(config.tokenizer_path),
             densenet_path = Path(config.densenet_path),
             save_model_path = Path(config.save_model_path),
-            save_tokenizer_path = Path(congig.save_tokenizer_path),
-            save_densenet_path = Path(congig.save_densenet_path)
+            save_tokenizer_path = Path(config.save_tokenizer_path),
+            save_densenet_path = Path(config.save_densenet_path)
         )
     
         return prepare_s3_config

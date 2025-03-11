@@ -234,7 +234,7 @@ def download(filename):
 def defaultTrain():
     if "name" in session:
         if request.method == "POST":
-            #os.system("python main.py")
+            os.system("python main.py")
             print("train successfully")
             return redirect(url_for("display_logs"))
         return render_template('train.html', )
