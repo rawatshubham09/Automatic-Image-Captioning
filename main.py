@@ -5,7 +5,7 @@ import warnings
 
 warnings.filterwarnings('ignore')
 
-
+# run
 from src.ImageCaptionP.pipeline.stage_01_data_ingestion import DataIngestionPipeline
 
 STAGE_NAME = "Data Ingestion"
