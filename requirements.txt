@@ -1,9 +1,8 @@
-tensorflow
+tensorflow==2.12.0
 pandas 
 mlflow
 numpy
 matplotlib
-seaborn
 python-box
 pyYAML
 tqdm
